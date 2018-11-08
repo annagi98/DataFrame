@@ -13,6 +13,7 @@ public class DataFrame {
     protected ArrayList<ArrayList<Object>> mainFrame;
     protected String[] titles;
     protected String[] types;
+    protected Class<? extends Value>[] vTypes;
 
 
     DataFrame(String[] newTitles, String[] newTypes){
@@ -30,6 +31,19 @@ public class DataFrame {
         titles = newTitles.clone();
         types = newTypes.clone();
         mainFrame = new ArrayList<ArrayList<Object>>();
+    }
+
+    //zmodyfikowane konstruktory
+    DataFrame(String[] newTitles, Class<? extends Value>[] newTypes){
+        titles = newTitles.clone();
+        vTypes = newTypes.clone();
+
+        mainFrame = new ArrayList<>();
+        for (String title : titles) {         //adding columns to the DF
+            mainFrame.add(new ArrayList<>());
+        }
+
+
     }
 
 
