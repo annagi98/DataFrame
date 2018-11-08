@@ -12,8 +12,8 @@ public abstract class Value {
     public abstract boolean lte(Value sth);
     public abstract boolean gte(Value sth);
     public abstract boolean neq(Value sth);
-     public abstract boolean equals(Object other);
-    /* public abstract int hashCode()
-     public abstract Value create(String s)  */
+    public abstract boolean equals(Object other);
+    public abstract int hashCode();
+    public abstract Value create(String s);
 
 }

@@ -1,10 +1,14 @@
-import static java.lang.Math.*;
-public class Float extends Value {
+public class FloatValue extends Value {
     private float value;
 
-    public Float(float value) {
+    public FloatValue(float value) {
         this.value = value;
     }
+
+    public FloatValue(){
+        this.value=0.0f;
+    }
+
 
     public Object getValue() {
         return value;
@@ -12,60 +16,58 @@ public class Float extends Value {
 
 
     public String toString() {
-        String new_string;
-        new_string = String.valueOf(value);
-        return new_string;
+        return "FloatValue{value=" + String.valueOf(value) + "f}";
     }
 
 
     public Value add(Value added) {
-        if (added instanceof Float) {
+        if (added instanceof FloatValue) {
             float val = (float) added.getValue();
-            return new Float(this.value + val);
+            return new FloatValue(this.value + val);
         }
         return null;
     }
 
     @Override
     public Value sub(Value subtracted) {
-        if (subtracted instanceof Float) {
+        if (subtracted instanceof FloatValue) {
             float val = (float) subtracted.getValue();
-            return new Float(this.value - val);
+            return new FloatValue(this.value - val);
         }
         return null;
     }
 
     @Override
     public Value mul(Value multiplying) {
-        if (multiplying instanceof Float) {
+        if (multiplying instanceof FloatValue) {
             float val = (float) multiplying.getValue();
-            return new Float(this.value * val);
+            return new FloatValue(this.value * val);
         }
         return null;
     }
 
     @Override
     public Value div(Value dividing) {
-        if (dividing instanceof Float) {
+        if (dividing instanceof FloatValue) {
             float val = (float) dividing.getValue();
-            return new Float(this.value / val);
+            return new FloatValue(this.value / val);
         }
         return null;
     }
 
     @Override
     public Value pow(Value power) {
-        if (power instanceof Float) {
+        if (power instanceof FloatValue) {
             float val = (float) power.getValue();
             float sum = (float)Math.pow(this.value, val);
-            return new Float(sum);
+            return new FloatValue(sum);
         }
         return null;
     }
 
     @Override
     public boolean eq(Value toCompare) {
-        if (toCompare instanceof Float) {
+        if (toCompare instanceof FloatValue) {
             float val = (float)toCompare.getValue();
             boolean equal = false;
             if (this.value == val){
@@ -78,7 +80,7 @@ public class Float extends Value {
 
     @Override
     public boolean lte(Value toCompare) {
-        if (toCompare instanceof Float) {
+        if (toCompare instanceof FloatValue) {
             float val = (float)toCompare.getValue();
             boolean lessOrEqual = false;
             if (this.value <= val){
@@ -91,7 +93,7 @@ public class Float extends Value {
 
     @Override
     public boolean gte(Value toCompare) {
-        if (toCompare instanceof Float) {
+        if (toCompare instanceof FloatValue) {
             float val = (float)toCompare.getValue();
             boolean greaterOrEqual = false;
             if (this.value >= val){
@@ -104,7 +106,7 @@ public class Float extends Value {
 
     @Override
     public boolean neq(Value toCompare) {
-        if (toCompare instanceof Float) {
+        if (toCompare instanceof FloatValue) {
             float val = (float)toCompare.getValue();
             boolean notEqual = false;
             if (this.value != val){
@@ -117,6 +119,35 @@ public class Float extends Value {
 
     @Override
     public boolean equals(Object other) {
-        return false;
+        if(other==null){
+            return false;
+        }
+        if(other instanceof FloatValue){
+            FloatValue otherFloatValue = (FloatValue) other;
+            if (this.value == otherFloatValue.value){
+                return true; //(this==other);
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(this.value);
+        result = (prime*result+(int)(temp ^ (temp>>>32)))/1000;
+        return result;
+    }
+
+    @Override
+    public Value create(String s) {
+        return new FloatValue(Float.parseFloat(s));
     }
 }

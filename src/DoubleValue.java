@@ -1,9 +1,11 @@
-import static java.lang.Math.*;
-public class Double extends Value {
+public class DoubleValue extends Value {
     private double value;
 
-    public Double(double value) {
+    public DoubleValue(double value) {
         this.value = value;
+    }
+    public DoubleValue(){
+        this.value=0.0;
     }
 
     public Object getValue() {
@@ -12,60 +14,58 @@ public class Double extends Value {
 
 
     public String toString() {
-        String new_string;
-        new_string = String.valueOf(value);
-        return new_string;
+        return "DoubleValue{value=" + String.valueOf(value) + "}";
     }
 
 
     public Value add(Value added) {
-        if (added instanceof Double) {
+        if (added instanceof DoubleValue) {
             double val = (double) added.getValue();
-            return new Double(this.value + val);
+            return new DoubleValue(this.value + val);
         }
         return null;
     }
 
     @Override
     public Value sub(Value subtracted) {
-        if (subtracted instanceof Double) {
+        if (subtracted instanceof DoubleValue) {
             double val = (double) subtracted.getValue();
-            return new Double(this.value - val);
+            return new DoubleValue(this.value - val);
         }
         return null;
     }
 
     @Override
     public Value mul(Value multiplying) {
-        if (multiplying instanceof Double) {
+        if (multiplying instanceof DoubleValue) {
             double val = (double) multiplying.getValue();
-            return new Double(this.value * val);
+            return new DoubleValue(this.value * val);
         }
         return null;
     }
 
     @Override
     public Value div(Value dividing) {
-        if (dividing instanceof Double) {
+        if (dividing instanceof DoubleValue) {
             double val = (double) dividing.getValue();
-            return new Double(this.value / val);
+            return new DoubleValue(this.value / val);
         }
         return null;
     }
 
     @Override
     public Value pow(Value power) {
-        if (power instanceof Double) {
+        if (power instanceof DoubleValue) {
             double val = (double) power.getValue();
             double sum = Math.pow(this.value, val);
-            return new Double((double)sum);
+            return new DoubleValue((double)sum);
         }
         return null;
     }
 
     @Override
     public boolean eq(Value toCompare) {
-        if (toCompare instanceof Double) {
+        if (toCompare instanceof DoubleValue) {
             double val = (double)toCompare.getValue();
             boolean equal = false;
             if (this.value == val){
@@ -78,7 +78,7 @@ public class Double extends Value {
 
     @Override
     public boolean lte(Value toCompare) {
-        if (toCompare instanceof Double) {
+        if (toCompare instanceof DoubleValue) {
             double val = (double)toCompare.getValue();
             boolean lessOrEqual = false;
             if (this.value <= val){
@@ -91,7 +91,7 @@ public class Double extends Value {
 
     @Override
     public boolean gte(Value toCompare) {
-        if (toCompare instanceof Double) {
+        if (toCompare instanceof DoubleValue) {
             double val = (double)toCompare.getValue();
             boolean greaterOrEqual = false;
             if (this.value >= val){
@@ -104,7 +104,7 @@ public class Double extends Value {
 
     @Override
     public boolean neq(Value toCompare) {
-        if (toCompare instanceof Double) {
+        if (toCompare instanceof DoubleValue) {
             double val = (double)toCompare.getValue();
             boolean notEqual = false;
             if (this.value != val){
@@ -117,7 +117,36 @@ public class Double extends Value {
 
     @Override
     public boolean equals(Object other) {
-        return false;
+        if(other==null){
+            return false;
+        }
+        if(other instanceof DoubleValue){
+            DoubleValue otherDoubleValue = (DoubleValue) other;
+            if (this.value == otherDoubleValue.value){
+                return true; //(this==other); - wtedy porownywalibysmy tez referencje
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(this.value);
+        result = (prime*result+(int)(temp ^ (temp>>>32)))/1000;
+        return result;
+    }
+
+    @Override
+    public Value create(String s) {
+        return new DoubleValue(Double.parseDouble(s));
     }
 }
 

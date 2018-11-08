@@ -1,9 +1,12 @@
-import static java.lang.Math.*;
-public class StringV extends Value {
+public class StringValue extends Value {
     private String value;
 
-    public StringV(String value) {
+    public StringValue(String value) {
         this.value = value;
+    }
+
+    public StringValue() {
+        this.value = "";
     }
 
     public Object getValue() {
@@ -12,18 +15,19 @@ public class StringV extends Value {
 
 
     public String toString() {
-        String new_string = value;
-        return new_string;
+        return "StringValue{value=" + String.valueOf(value) + "}";
+       /* String new_string = value;
+        return new_string;*/
     }
 
 
     public Value add(Value added) {
 
-        if ( added instanceof  StringV){
+        if ( added instanceof StringValue){
             //String old =  this.value;
             //String val = (String) added.toString();
            // return new String(this.value+ value.toString());
-            return new StringV(this.value = this.value + added.toString());  //czemu to nie dziala?
+            return new StringValue(this.value = this.value + added.toString());  //czemu to nie dziala?
          //   return old;
 
         }
@@ -65,7 +69,7 @@ public class StringV extends Value {
 
     @Override
     public boolean eq(Value toCompare) {
-        if (toCompare instanceof StringV) {
+        if (toCompare instanceof StringValue) {
             String val = toCompare.toString();
             boolean equal = false;
             if (this.value.equals(val)){
@@ -79,7 +83,7 @@ public class StringV extends Value {
     @Override
     public boolean lte(Value toCompare) {
         System.out.print("I can only compare the length of 2 strings.");
-        if (toCompare instanceof StringV) {
+        if (toCompare instanceof StringValue) {
             String val = toCompare.toString();
             boolean lessOrEqual = false;
             if (this.value.length() <= val.length()){
@@ -93,7 +97,7 @@ public class StringV extends Value {
     @Override
     public boolean gte(Value toCompare) {
         System.out.print("I can only compare the length of 2 strings.");
-        if (toCompare instanceof StringV) {
+        if (toCompare instanceof StringValue) {
             String val = toCompare.toString();
             boolean greaterOrEqual = false;
             if (this.value.length() >= val.length()){
@@ -106,7 +110,7 @@ public class StringV extends Value {
 
     @Override
     public boolean neq(Value toCompare) {
-        if (toCompare instanceof StringV) {
+        if (toCompare instanceof StringValue) {
             String val = toCompare.toString();
             boolean notEqual = false;
             if (!this.value.equals(val)){
@@ -120,6 +124,16 @@ public class StringV extends Value {
     @Override
     public boolean equals(Object other) {
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
+    }
+
+    @Override
+    public Value create(String s) {
+        return new StringValue(s);
     }
 }
 
